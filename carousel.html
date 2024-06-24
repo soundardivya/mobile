@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Carousel</title>
+    <!-- Slick Carousel CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+    <!-- jQuery dependency -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Slick Carousel JS -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+<style>
+    .carousel img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Center align images */
+}
+
+</style></head>
+
+<body>
+    <div class="carousel">
+        <!-- Images will be dynamically added here -->
+    </div>
+
+    <script>
+        const images = [
+            { id: 90, name: "Realme 8 Pro", price: 20000, image: "image/real8.png", brand: "Realme", details: "Latest Realme with excellent camera", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.5, color: ["Black", "Blue"] },
+            { id: 91, name: "Realme 7 Pro", price: 18000, image: "image/real7.jpeg", brand: "Realme", details: "High-end Realme with great features", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.4, color: ["Black", "Blue"] },
+            { id: 92, name: "Realme 6 Pro", price: 16000, image: "image/real6.jpeg", brand: "Realme", details: "Mid-range Realme with good performance", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Black", "Blue"] },
+            { id: 93, name: "Realme 5 Pro", price: 14000, image: "image/real5.jpeg", brand: "Realme", details: "Affordable Realme with decent specs", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.2, color: ["Black", "Blue"] },
+            { id: 94, name: "Realme 4 Pro", price: 12000, image: "image/rea4.png", brand: "Realme", details: "Budget Realme with solid features", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.1, color: ["Black", "Blue"] },
+            { id: 95, name: "Realme 3 Pro", price: 10000, image: "image/real3.jpg", brand: "Realme", details: "Affordable Realme with good performance", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.0, color: ["Black", "Blue"] },
+            { id: 96, name: "Realme 2 Pro", price: 9000, image: "image/r2.jpg", brand: "Realme", details: "Budget Realme with decent specs", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.0, color: ["Black", "Blue"] },
+            { id: 97, name: "Realme 1", price: 8000, image: "image/rea1.jpeg", brand: "Realme", details: "Entry-level Realme with good features", category: "mobile", ram: ["3GB"], rom: ["32GB"], review: 3.9, color: ["Black", "Blue"] },
+            { id: 98, name: "Realme X7", price: 22000, image: "image/rx7.jpg", brand: "Realme", details: "High-end Realme with excellent performance", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.5, color: ["Black", "Blue"] },
+            { id: 99, name: "Realme X2", price: 20000, image: "image/rx2.jpeg", brand: "Realme", details: "Realme with great camera", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.4, color: ["Black", "Blue"] },
+            { id: 100, name: "Realme 9 Pro", price: 25000, image: "image/pro9.jpg", brand: "Realme", details: "Flagship Realme with advanced camera technology", category: "mobile", ram: ["12GB"], rom: ["256GB"], review: 4.7, color: ["Black", "Blue"] },
+            { id: 101, name: "Realme 8", price: 18000, image: "image/rea8.png", brand: "Realme", details: "Latest addition to the Realme series with impressive features", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.6, color: ["Black", "Blue"] },
+            { id: 102, name: "Realme Narzo 50", price: 15000, image: "image/z50.jpg", brand: "Realme", details: "Powerful Realme model with enhanced gaming capabilities", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.5, color: ["Black", "Blue"] }
+        ];
+
+        $(document).ready(function () {
+            $('.carousel').slick({
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                autoplay: true, // Enable autoplay
+                autoplaySpeed: 2000, // Autoplay speed in milliseconds (e.g., 2000ms = 2 seconds)
+                dots: true,
+                arrows: true,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3,
+                            infinite: true,
+                            dots: true,
+                            arrows: true
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+
+            // Function to populate carousel with product images
+            function populateCarousel(images) {
+                const carousel = $('.carousel');
+                images.forEach(product => {
+                    const slide = $('<div>').append($('<img>').attr('src', product.image).attr('alt', product.name));
+                    carousel.append(slide);
+                });
+            }
+
+            // Call function to populate carousel with product images
+            populateCarousel(images);
+        });
+
+    </script>
+</body>
+
+</html>

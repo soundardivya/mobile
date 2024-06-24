@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .head1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+
+        #filteredProductsList {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        #filteredProductsList-item {
+            width: calc(25% - 20px);
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        #filteredProductsList img {
+            width: 250px;
+            height: auto;
+            display: block;
+            margin: 0 auto 10px;
+        }
+
+        #filteredProductsList-item p {
+            margin: 0;
+        }
+
+        #filteredProductsList-name {
+            font-size: 30px;
+            color: #333;
+        }
+
+        #filteredProductsList-price {
+            font-size: 20px;
+            /* Change font size */
+            color: #701919;
+            /* Change color */
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="main">
+        <div class="container">
+            <h2 class="head1">MOBILE COLLECTIONS</h2>
+            <div id="filteredProductsList"></div>
+        </div>
+    </section>
+    <button onclick="goToCart()">Go to Cart</button>
+
+    <script>
+        const products = [
+        { id: 1, name: "iPhone 15", price: 80000, image: "image/ip15.jpg", brand: "iPhone", details: "Latest iPhone model with advanced features", category: "mobile", ram: ["4GB", "6GB"], rom: ["64GB", "128GB"], review: 4.5, color: ["Black", "White"] },
+        { id: 2, name: "iPhone 14", price: 70000, image: "image/ip15.jpg", brand: "iPhone", details: "High-performance iPhone with excellent camera", category: "mobile", ram: ["4GB", "6GB"], rom: ["64GB", "128GB"], review: 4.4, color: ["Black", "White"] },
+        { id: 3, name: "iPhone 13", price: 60000, image: "image/ip15.jpg", brand: "iPhone", details: "iPhone with a sleek design and fast processor", category: "mobile", ram: ["4GB", "6GB"], rom: ["64GB", "128GB"], review: 4.3, color: ["Black", "White"] },
+        { id: 4, name: "iPhone 12", price: 50000, image: "image/ip15.jpg", brand: "iPhone", details: "Previous generation iPhone with great value for money", category: "mobile", ram: ["4GB", "6GB"], rom: ["64GB", "128GB"], review: 4.2, color: ["Black", "White"] },
+        { id: 5, name: "iPhone 11", price: 40000, image: "image/ip15.jpg", brand: "iPhone", details: "Reliable iPhone with a dual-camera system", category: "mobile", ram: ["4GB"], rom: ["64GB", "128GB"], review: 4.1, color: ["Black", "White", "Red"] },
+        { id: 6, name: "iPhone XS", price: 35000, image: "image/ip15.jpg", brand: "iPhone", details: "Compact iPhone with OLED display", category: "mobile", ram: ["4GB"], rom: ["64GB", "256GB"], review: 4.0, color: ["Silver", "Space Gray", "Gold"] },
+        { id: 7, name: "iPhone XR", price: 30000, image: "image/ip15.jpg", brand: "iPhone", details: "Affordable iPhone with Liquid Retina display", category: "mobile", ram: ["3GB"], rom: ["64GB", "128GB"], review: 4.1, color: ["Black", "White", "Blue", "Coral", "Yellow", "Red"] },
+        { id: 8, name: "iPhone X", price: 32000, image: "image/ip15.jpg", brand: "iPhone", details: "Innovative iPhone with edge-to-edge display", category: "mobile", ram: ["3GB"], rom: ["64GB", "256GB"], review: 4.0, color: ["Space Gray", "Silver"] },
+        { id: 9, name: "iPhone 8", price: 25000, image: "image/ip15.jpg", brand: "iPhone", details: "Classic iPhone with Touch ID", category: "mobile", ram: ["2GB"], rom: ["64GB", "128GB"], review: 3.9, color: ["Gold", "Silver", "Space Gray"] },
+        { id: 10, name: "iPhone 7", price: 20000, image: "image/ip15.jpg", brand: "iPhone", details: "iPhone with water resistance and improved camera", category: "mobile", ram: ["2GB"], rom: ["32GB", "128GB"], review: 3.8, color: ["Black", "Silver", "Gold", "Rose Gold", "Jet Black"] },
+        { id: 11, name: "iPhone 6s", price: 15000, image: "image/ip15.jpg", brand: "iPhone", details: "Iconic iPhone with 3D Touch", category: "mobile", ram: ["2GB"], rom: ["16GB", "32GB", "64GB", "128GB"], review: 4.0, color: ["Space Gray", "Silver", "Gold", "Rose Gold"] },
+        { id: 12, name: "iPhone SE (2nd generation)", price: 25000, image: "image/ip15.jpg", brand: "iPhone", details: "Compact iPhone with A13 Bionic chip", category: "mobile", ram: ["3GB"], rom: ["64GB", "128GB", "256GB"], review: 4.3, color: ["Black", "White", "Red"] },
+
+        // Samsung products
+        { id: 14, name: "Samsung Galaxy S23", price: 90000, image: "image/sam1.jpg", brand: "Samsung", details: "Latest Galaxy with advanced features", category: "mobile", ram: ["8GB"], rom: ["128GB", "256GB"], review: 4.8, color: ["Black", "White"] },
+        { id: 15, name: "Samsung Galaxy S22", price: 80000, image: "image/sam3.jpg", brand: "Samsung", details: "High-end Galaxy with excellent camera", category: "mobile", ram: ["8GB"], rom: ["128GB", "256GB"], review: 4.7, color: ["Black", "White"] },
+        { id: 16, name: "Samsung Galaxy S21", price: 70000, image: "image/sam3.jpg", brand: "Samsung", details: "Galaxy with powerful performance", category: "mobile", ram: ["8GB"], rom: ["128GB", "256GB"], review: 4.6, color: ["Black", "White"] },
+        { id: 17, name: "Samsung Galaxy Note 20", price: 75000, image: "image/sam3.jpg", brand: "Samsung", details: "Note with stylus support", category: "mobile", ram: ["8GB"], rom: ["256GB"], review: 4.5, color: ["Black", "White"] },
+        { id: 18, name: "Samsung Galaxy A53", price: 35000, image: "image/sam3.jpg", brand: "Samsung", details: "Mid-range Galaxy with solid features", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Black", "White"] },
+        { id: 19, name: "Samsung Galaxy A52", price: 30000, image: "image/sam3.jpg", brand: "Samsung", details: "Affordable Galaxy with great value", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.2, color: ["Black", "White"] },
+        { id: 20, name: "Samsung Galaxy A51", price: 25000, image: "image/sam3.jpg", brand: "Samsung", details: "Budget Galaxy with essential features", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.1, color: ["Black", "White"] },
+        { id: 21, name: "Samsung Galaxy M32", price: 20000, image: "image/sam3.jpg", brand: "Samsung", details: "Value Galaxy with big battery", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.0, color: ["Black", "White"] },
+        { id: 22, name: "Samsung Galaxy M31", price: 18000, image: "image/sam3.jpg", brand: "Samsung", details: "Budget Galaxy with solid performance", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 3.9, color: ["Black", "White"] },
+        { id: 23, name: "Samsung Galaxy M30", price: 15000, image: "image/sam3.jpg", brand: "Samsung", details: "Affordable Galaxy with decent specs", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 3.8, color: ["Black", "White"] },
+        { id: 24, name: "Samsung Galaxy A72", price: 40000, image: "image/sam3.jpg", brand: "Samsung", details: "Premium Galaxy with superior camera", category: "mobile", ram: ["8GB"], rom: ["128GB", "256GB"], review: 4.6, color: ["Black", "White", "Blue"] },
+        { id: 25, name: "Samsung Galaxy A71", price: 30000, image: "image/sam3.jpg", brand: "Samsung", details: "Feature-packed Galaxy with large display", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.5, color: ["Black", "White", "Silver", "Blue"] },
+        // Redmi products
+        { id: 27, name: "Redmi Note 12", price: 18000, image: "image/red1.jpg", brand: "Xiaomi", details: "Latest Redmi with great features", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.5, color: ["Blue", "White"] },
+        { id: 28, name: "Redmi Note 11", price: 15000, image: "image/red1.jpg", brand: "Xiaomi", details: "Redmi with excellent performance", category: "mobile", ram: ["4GB"], rom: ["64GB", "128GB"], review: 4.4, color: ["Blue", "White"] },
+        { id: 29, name: "Redmi Note 10", price: 12000, image: "image/red1.jpg", brand: "Xiaomi", details: "Affordable Redmi with good specs", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.3, color: ["Blue", "White"] },
+        { id: 30, name: "Redmi 9A", price: 7000, image: "image/red1.jpg", brand: "Xiaomi", details: "Budget Redmi with basic features", category: "mobile", ram: ["2GB"], rom: ["32GB"], review: 4.0, color: ["Blue", "White"] },
+        { id: 31, name: "Redmi 9C", price: 8000, image: "image/red1.jpg", brand: "Xiaomi", details: "Affordable Redmi with decent performance", category: "mobile", ram: ["3GB"], rom: ["64GB"], review: 4.1, color: ["Blue", "White"] },
+        { id: 32, name: "Redmi 9", price: 9000, image: "image/red1.jpg", brand: "Xiaomi", details: "Value Redmi with good battery life", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.2, color: ["Blue", "White"] },
+        { id: 33, name: "Redmi Note 9 Pro", price: 13000, image: "image/red1.jpg", brand: "Xiaomi", details: "Pro Redmi with advanced features", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Blue", "White"] },
+        { id: 34, name: "Redmi Note 8", price: 11000, image: "image/red1.jpg", brand: "Xiaomi", details: "Popular Redmi with excellent camera", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.2, color: ["Blue", "White"] },
+        { id: 35, name: "Redmi Note 7", price: 9000, image: "image/red1.jpg", brand: "Xiaomi", details: "Affordable Redmi with good performance", category: "mobile", ram: ["3GB"], rom: ["32GB"], review: 4.1, color: ["Blue", "White"] },
+        { id: 36, name: "Redmi Note 6 Pro", price: 10000, image: "image/red1.jpg", brand: "Xiaomi", details: "Value Redmi with dual camera", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.1, color: ["Blue", "White"] },
+        { id: 37, name: "Redmi 10", price: 10000, image: "image/red1.jpg", brand: "Xiaomi", details: "Value Redmi with improved performance", category: "mobile", ram: ["4GB"], rom: ["64GB", "128GB"], review: 4.2, color: ["Blue", "White"] },
+        { id: 38, name: "Redmi Note 13", price: 16000, image: "image/red1.jpg", brand: "Xiaomi", details: "Redmi Note series with enhanced features", category: "mobile", ram: ["6GB"], rom: ["128GB", "256GB"], review: 4.6, color: ["Blue", "White"] },
+
+        // Poco products
+        { id: 39, name: "Poco X4 Pro", price: 25000, image: "image/poco.jpg", details: "Latest Poco with powerful performance", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.5, color: ["Black", "Yellow"] },
+        { id: 40, name: "Poco M4 Pro", price: 20000, image: "image/poco.jpg", details: "Mid-range Poco with great features", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.4, color: ["Black", "Yellow"] },
+        { id: 41, name: "Poco M3", price: 15000, image: "image/poco.jpg", details: "Affordable Poco with big battery", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Black", "Yellow"] },
+        { id: 42, name: "Poco X3", price: 18000, image: "image/poco.jpg", details: "Poco with great performance", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Black", "Yellow"] },
+        { id: 43, name: "Poco F3", price: 30000, image: "image/poco.jpg", details: "High-end Poco with flagship features", category: "mobile", ram: ["8GB"], rom: ["256GB"], review: 4.6, color: ["Black", "Yellow"] },
+        { id: 44, name: "Poco F2 Pro", price: 28000, image: "image/poco.jpg", details: "Poco with pop-up camera", category: "mobile", ram: ["8GB"], rom: ["256GB"], review: 4.5, color: ["Black", "Yellow"] },
+        { id: 45, name: "Poco X2", price: 16000, image: "image/poco.jpg", details: "Poco with dual camera setup", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.2, color: ["Black", "Yellow"] },
+        { id: 46, name: "Poco M2", price: 12000, image: "image/poco.jpg", details: "Budget Poco with decent specs", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.1, color: ["Black", "Yellow"] },
+        { id: 47, name: "Poco F1", price: 22000, image: "image/poco.jpg", details: "Popular Poco with great value", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Black", "Yellow"] },
+        { id: 48, name: "Poco X1", price: 14000, image: "image/poco.jpg", details: "Affordable Poco with good performance", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.2, color: ["Black", "Yellow"] },
+        { id: 49, name: "Poco X5", price: 27000, image: "image/poco.jpg", details: "Poco with cutting-edge features", category: "mobile", ram: ["8GB"], rom: ["256GB"], review: 4.6, color: ["Black", "Blue"] },
+        { id: 50, name: "Poco M5", price: 18000, image: "image/poco.jpg", details: "Affordable Poco with solid performance", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.4, color: ["Black", "Green"] },
+        // Vivo products
+        { id: 51, name: "Vivo V21", price: 25000, image: "image/vivo.jpg", brand: "Vivo", details: "Latest Vivo with excellent camera", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.5, color: ["Blue", "White"] },
+        { id: 52, name: "Vivo V20", price: 23000, image: "image/vivo.jpg", brand: "Vivo", details: "Vivo with sleek design", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.4, color: ["Blue", "White"] },
+        { id: 53, name: "Vivo Y73", price: 20000, image: "image/vivo.jpg", brand: "Vivo", details: "Mid-range Vivo with good features", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.3, color: ["Blue", "White"] },
+        { id: 54, name: "Vivo Y72", price: 18000, image: "image/vivo.jpg", brand: "Vivo", details: "Affordable Vivo with decent specs", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.2, color: ["Blue", "White"] },
+        { id: 55, name: "Vivo Y20", price: 15000, image: "image/vivo.jpg", brand: "Vivo", details: "Budget Vivo with solid performance", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.1, color: ["Blue", "White"] },
+        { id: 56, name: "Vivo X60", price: 50000, image: "image/vivo.jpg", brand: "Vivo", details: "High-end Vivo with flagship features", category: "mobile", ram: ["12GB"], rom: ["256GB"], review: 4.7, color: ["Blue", "White"] },
+        { id: 57, name: "Vivo X50", price: 45000, image: "image/vivo.jpg", brand: "Vivo", details: "Vivo with excellent camera", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.6, color: ["Blue", "White"] },
+        { id: 58, name: "Vivo Y51", price: 20000, image: "image/vivo.jpg", brand: "Vivo", details: "Mid-range Vivo with good value", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.4, color: ["Blue", "White"] },
+        { id: 59, name: "Vivo Y31", price: 17000, image: "image/vivo.jpg", brand: "Vivo", details: "Affordable Vivo with decent specs", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Blue", "White"] },
+        { id: 60, name: "Vivo V19", price: 30000, image: "image/vivo.jpg", brand: "Vivo", details: "Vivo with advanced features", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.5, color: ["Blue", "White"] },
+        { id: 61, name: "Vivo Y52s", price: 22000, image: "image/vivo.jpg", brand: "Vivo", details: "Vivo with 5G support", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Blue", "White"] },
+        { id: 62, name: "Vivo S10", price: 28000, image: "image/vivo.jpg", brand: "Vivo", details: "Sleek and stylish Vivo", category: "mobile", ram: ["8GB"], rom: ["256GB"], review: 4.6, color: ["Blue", "White"] },
+
+        // Oppo products
+        { id: 63, name: "Oppo Reno 6", price: 30000, image: "image/oppo.jpg", brand: "Oppo", details: "Latest Oppo with excellent camera", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.5, color: ["Blue", "Black"] },
+        { id: 64, name: "Oppo Reno 5", price: 28000, image: "image/oppo.jpg", brand: "Oppo", details: "High-end Oppo with great performance", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.4, color: ["Blue", "Black"] },
+        { id: 65, name: "Oppo F19", price: 20000, image: "image/oppo.jpg", brand: "Oppo", details: "Mid-range Oppo with good features", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Blue", "Black"] },
+        { id: 66, name: "Oppo A53", price: 15000, image: "image/oppo.jpg", brand: "Oppo", details: "Affordable Oppo with decent specs", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.2, color: ["Blue", "Black"] },
+        { id: 67, name: "Oppo A31", price: 12000, image: "image/oppo.jpg", brand: "Oppo", details: "Budget Oppo with solid performance", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.1, color: ["Blue", "Black"] },
+        { id: 68, name: "Oppo Find X3", price: 50000, image: "image/oppo.jpg", brand: "Oppo", details: "Flagship Oppo with advanced features", category: "mobile", ram: ["12GB"], rom: ["256GB"], review: 4.8, color: ["Blue", "Black"] },
+        { id: 69, name: "Oppo Find X2", price: 45000, image: "image/oppo.jpg", brand: "Oppo", details: "High-end Oppo with great camera", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.6, color: ["Blue", "Black"] },
+        { id: 70, name: "Oppo F17", price: 18000, image: "image/oppo.jpg", brand: "Oppo", details: "Mid-range Oppo with good value", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Blue", "Black"] },
+        { id: 71, name: "Oppo F15", price: 17000, image: "image/oppo.jpg", brand: "Oppo", details: "Affordable Oppo with decent specs", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.2, color: ["Blue", "Black"] },
+        { id: 72, name: "Oppo A52", price: 16000, image: "image/oppo.jpg", brand: "Oppo", details: "Budget Oppo with good performance", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.1, color: ["Blue", "Black"] },
+        { id: 73, name: "Oppo A73", price: 22000, image: "image/oppo.jpg", brand: "Oppo", details: "Mid-range Oppo with sleek design", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.4, color: ["Blue", "Black"] },
+        { id: 74, name: "Oppo A74", price: 24000, image: "image/oppo.jpg", brand: "Oppo", details: "Affordable Oppo with solid performance", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Blue", "Black"] },
+
+        // OnePlus products
+        { id: 75, name: "OnePlus 9 Pro", price: 60000, image: "image/oneplus.jpg", brand: "OnePlus", details: "Flagship OnePlus with excellent camera", category: "mobile", ram: ["12GB"], rom: ["256GB"], review: 4.8, color: ["Green", "Black"] },
+        { id: 76, name: "OnePlus 9", price: 50000, image: "image/oneplus.jpg", brand: "OnePlus", details: "High-end OnePlus with great features", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.7, color: ["Green", "Black"] },
+        { id: 77, name: "OnePlus 8T", price: 45000, image: "image/oneplus.jpg", brand: "OnePlus", details: "OnePlus with fast performance", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.6, color: ["Green", "Black"] },
+        { id: 78, name: "OnePlus 8", price: 40000, image: "image/oneplus.jpg", brand: "OnePlus", details: "OnePlus with excellent display", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.5, color: ["Green", "Black"] },
+        { id: 79, name: "OnePlus 7T", price: 35000, image: "image/oneplus.jpg", brand: "OnePlus", details: "OnePlus with great camera", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.4, color: ["Green", "Black"] },
+        { id: 80, name: "OnePlus 7", price: 30000, image: "image/oneplus.jpg", brand: "OnePlus", details: "Affordable OnePlus with good performance", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Green", "Black"] },
+        { id: 81, name: "OnePlus Nord", price: 25000, image: "image/oneplus.jpg", brand: "OnePlus", details: "Mid-range OnePlus with great value", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.4, color: ["Green", "Black"] },
+        { id: 82, name: "OnePlus Nord CE", price: 22000, image: "image/oneplus.jpg", brand: "OnePlus", details: "Affordable OnePlus with decent specs", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Green", "Black"] },
+        { id: 83, name: "OnePlus 6T", price: 28000, image: "image/oneplus.jpg", brand: "OnePlus", details: "Popular OnePlus with great value", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.5, color: ["Green", "Black"] },
+        { id: 84, name: "OnePlus 6", price: 26000, image: "image/oneplus.jpg", brand: "OnePlus", details: "Affordable OnePlus with good performance", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.4, color: ["Green", "Black"] },
+        { id: 85, name: "OnePlus 9R", price: 45000, image: "image/oneplus.jpg", brand: "OnePlus", details: "Powerful OnePlus with gaming-focused features", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.6, color: ["Green", "Black"] },
+        { id: 86, name: "OnePlus 8 Pro", price: 55000, image: "image/oneplus.jpg", brand: "OnePlus", details: "Premium OnePlus with top-notch camera capabilities", category: "mobile", ram: ["12GB"], rom: ["256GB"], review: 4.9, color: ["Green", "Black"] },
+
+        // Infinix products
+        { id: 87, name: "Infinix Note 11", price: 12000, image: "image/infinix1.jpg", brand: "Infinix", details: "Infinix with good performance", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.1, color: ["Black", "White"] },
+        { id: 88, name: "Infinix Note 10", price: 11000, image: "image/infinix1.jpg", brand: "Infinix", details: "Affordable Infinix with decent specs", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.0, color: ["Black", "White"] },
+        { id: 89, name: "Infinix Hot 10", price: 10000, image: "image/infinix1.jpg", brand: "Infinix", details: "Budget Infinix with solid features", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.0, color: ["Black", "White"] },
+        { id: 90, name: "Infinix Hot 9", price: 9000, image: "image/infinix1.jpg", brand: "Infinix", details: "Value Infinix with good performance", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.0, color: ["Black", "White"] },
+        { id: 91, name: "Infinix Smart 5", price: 8000, image: "image/infinix1.jpg", brand: "Infinix", details: "Affordable Infinix with basic features", category: "mobile", ram: ["3GB"], rom: ["32GB"], review: 3.9, color: ["Black", "White"] },
+        { id: 92, name: "Infinix Zero 8", price: 15000, image: "image/infinix1.jpg", brand: "Infinix", details: "Infinix with great camera", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.3, color: ["Black", "White"] },
+        { id: 93, name: "Infinix Zero 6", price: 14000, image: "image/infinix1.jpg", brand: "Infinix", details: "Infinix with excellent features", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.2, color: ["Black", "White"] },
+        { id: 94, name: "Infinix S5", price: 13000, image: "image/infinix1.jpg", brand: "Infinix", details: "Mid-range Infinix with good value", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.1, color: ["Black", "White"] },
+        { id: 95, name: "Infinix S4", price: 12000, image: "image/infinix1.jpg", brand: "Infinix", details: "Affordable Infinix with decent specs", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.0, color: ["Black", "White"] },
+        { id: 96, name: "Infinix Hot 7", price: 10000, image: "image/infinix1.jpg", brand: "Infinix", details: "Budget Infinix with solid performance", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 3.9, color: ["Black", "White"] },
+        { id: 97, name: "Infinix Note 12 Pro", price: 18000, image: "image/infinix1.jpg", brand: "Infinix", details: "Pro version of Note series with enhanced features", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.5, color: ["Black", "White"] },
+        { id: 98, name: "Infinix Hot 11", price: 11000, image: "image/infinix1.jpg", brand: "Infinix", details: "Updated version of Hot series with improved performance", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.1, color: ["Black", "White"] },
+        // Realme products
+        { id: 99, name: "Realme 8 Pro", price: 20000, image: "image/real.jpg", brand: "Realme", details: "Latest Realme with excellent camera", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.5, color: ["Black", "Blue"] },
+        { id: 100, name: "Realme 7 Pro", price: 18000, image: "image/real.jpg", brand: "Realme", details: "High-end Realme with great features", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.4, color: ["Black", "Blue"] },
+        { id: 101, name: "Realme 6 Pro", price: 16000, image: "image/real.jpg", brand: "Realme", brand: "Realme", details: "Mid-range Realme with good performance", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.3, color: ["Black", "Blue"] },
+        { id: 102, name: "Realme 5 Pro", price: 14000, image: "image/real.jpg", brand: "Realme", details: "Affordable Realme with decent specs", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.2, color: ["Black", "Blue"] },
+        { id: 103, name: "Realme 4 Pro", price: 12000, image: "image/real.jpg", brand: "Realme", details: "Budget Realme with solid features", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.1, color: ["Black", "Blue"] },
+        { id: 104, name: "Realme 3 Pro", price: 10000, image: "image/real.jpg", brand: "Realme", details: "Affordable Realme with good performance", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.0, color: ["Black", "Blue"] },
+        { id: 105, name: "Realme 2 Pro", price: 9000, image: "image/real.jpg", brand: "Realme", details: "Budget Realme with decent specs", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.0, color: ["Black", "Blue"] },
+        { id: 106, name: "Realme 1", price: 8000, image: "image/real.jpg", brand: "Realme", details: "Entry-level Realme with good features", category: "mobile", ram: ["3GB"], rom: ["32GB"], review: 3.9, color: ["Black", "Blue"] },
+        { id: 107, name: "Realme X7", price: 22000, image: "image/real.jpg", brand: "Realme", details: "High-end Realme with excellent performance", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.5, color: ["Black", "Blue"] },
+        { id: 108, name: "Realme X2", price: 20000, image: "image/real.jpg", brand: "Realme", details: "Realme with great camera", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.4, color: ["Black", "Blue"] },
+        { id: 109, name: "Realme 9 Pro", price: 25000, image: "image/real.jpg", brand: "Realme", details: "Flagship Realme with advanced camera technology", category: "mobile", ram: ["12GB"], rom: ["256GB"], review: 4.7, color: ["Black", "Blue"] },
+        { id: 110, name: "Realme 8", price: 18000, image: "image/real.jpg", brand: "Realme", details: "Latest addition to the Realme series with impressive features", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.6, color: ["Black", "Blue"] },
+    ]
+
+    function getQueryParams() {
+    const params = {};
+    const queryString = window.location.search.substring(1);
+    const queryArray = queryString.split("&");
+    queryArray.forEach(query => {
+        const [key, value] = query.split("=");
+        params[key] = decodeURIComponent(value);
+    });
+    return params;
+}
+
+// Function to display filtered products
+function displayFilteredProducts() {
+    const params = getQueryParams();
+    const brandName = params.brand;
+    const filteredProducts = products.filter(product => product.brand === brandName);
+
+    const filteredProductsListElement = document.getElementById("filteredProductsList");
+    filteredProductsListElement.innerHTML = "";
+    filteredProducts.forEach(product => {
+        const productDiv = document.createElement("div");
+        productDiv.className = "pro-col";
+        productDiv.innerHTML = `
+            <div class="pro-card">
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+            </div>
+        `;
+        filteredProductsListElement.appendChild(productDiv);
+    });
+}
+
+// Call function to display filtered products
+displayFilteredProducts();
+
+// Function to navigate to cart page
+function goToCart() {
+    window.location.href = 'cart.html';
+}
+
+// Function to display products list
+function filteredProductsList(product) {
+    const similarProductItem = document.createElement("div");
+    similarProductItem.classList.add('product-item');
+    similarProductItem.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h2>${product.name}</h2>
+        <p class="price">₹${product.price}</p>
+        <p>${product.details}</p>`;
+    document.getElementById('similarProductList').appendChild(similarProductItem);
+
+    // Add event listener to navigate to details page when clicked
+    similarProductItem.addEventListener("click", function () {
+        window.location.href = `details.html?product=${product.name}`;
+    });
+}
+
+// Loop through products to display them
+const productCol = document.getElementById('productCol');
+products.forEach(product => {
+    const div = document.createElement('div');
+    div.className = 'products';
+    div.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <p class="product-name">${product.name}</p>
+        <p class="product-price">₹${product.price}</p>
+    `;
+    div.onclick = () => viewProductDetails(product);
+    productCol.appendChild(div);
+});
+
+// Function to navigate to product details page
+function viewProductDetails(product) {
+    window.location.href = `details.html?product=${product.name}`;
+}
+    </script>
+</body>
+
+</html>

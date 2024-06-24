@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        a {
+            text-decoration: none;
+
+        }
+
+        .logo a {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+        }
+
+        .search-bar button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #555;
+            color: white;
+            border-radius: 3px;
+            margin-left: 5px;
+        }
+
+        .navbar-icons a {
+            color: white;
+            margin-left: 20px;
+            font-size: 20px;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+
+            .search-bar,
+            .navbar-icons {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .navbar-icons.active,
+            .search-bar.active {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .navbar-icons a {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            .search-bar {
+                display: none;
+                width: 100%;
+            }
+
+            .search-bar input {
+                width: calc(100% - 70px);
+            }
+
+            .search-bar button {
+                width: 70px;
+            }
+        }
+
+        .product-details,
+        .button-container {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .product-details img {
+            width: 60%;
+            padding: 40px;
+            height: auto;
+            margin-bottom: 20px;
+            position: relative;
+            justify-content: center;
+            border: 1px solid #f0f0f0;
+        }
+
+        .product-details h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .product-details p {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .product-details .price {
+            font-size: 20px;
+            color: green;
+            margin-bottom: 20px;
+        }
+
+        .button-container button {
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            margin-right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .button-container button:hover {
+            background-color: #45a049;
+        }
+
+        select {
+            font-size: 16px;
+            padding: 5px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .similar-products,
+        .interested-products {
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        .similar-products h3,
+        .interested-products h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .product-item {
+            flex: 1 1 calc(25% - 10px);
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .product-item img {
+            max-width: 60%;
+            height: auto;
+            padding-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product-item h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .product-item p {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .product-item .price {
+            font-size: 18px;
+            color: green;
+        }
+
+        .total-amount {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .pro-row {
+            display: flex;
+        }
+
+        .pro-col1 {
+            width: 50%;
+        }
+
+        .pro-col2 {
+            width: 60%;
+            border: 1px solid #f0f0f0;
+            padding: 20px;
+        }
+
+        .pro-ram {
+            width: 20%;
+        }
+
+        .offers {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+
+        .offers h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .offers ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .offers li {
+            margin-bottom: 10px;
+        }
+
+        .offers li i {
+            margin-right: 10px;
+        }
+
+        .main {
+            background-color: rgb(248, 228, 252);
+        }
+
+        .head1 {
+            font-size: 40px;
+            color: #270132;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+
+        }
+
+        .productcol {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .product-item {
+            width: calc(25% - 20px);
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .product-item img {
+            width: 100px;
+            height: auto;
+            display: block;
+            margin: 0 auto 10px;
+        }
+
+        .product-item p {
+            margin: 0;
+        }
+
+        .product-name {
+            font-size: 30px;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 20px;
+            /* Change font size */
+            color: #701919;
+            /* Change color */
+        }
+
+        #productList {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .pro-col {
+            width: 25%;
+
+        }
+
+        .pro-card {
+            margin: 30px;
+        }
+
+        img {
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <a href="#">Logo</a>
+            </div>
+            <div class="search-bar">
+                <input id="search-input" type="text" placeholder="Search...">
+                <button type="submit" onclick="searchProduct()">Search</button>
+            </div>
+            <div class="menu-toggle">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="navbar-icons">
+                <a href="#" class="login-btn">Login</a>
+                <a href="cart.html" class="cart-icon"><i class="fa fa-shopping-cart"></i></a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="left">
+            <div class="product-details" id="productDetails"></div>
+            <div class="offers" id="offersSection">
+                <h3>Available Offers</h3>
+                <ul id="offersList"></ul>
+            </div>
+            <div class="Specifications" id="Specification"></div>
+        </div>
+        <div class="right">
+            <div class="button-container">
+                <button onclick="addToCart()">Add to Cart</button>
+                <button onclick="buyNow()">Buy Now</button>
+                <button onclick="goToCart()">Go to Cart</button>
+            </div>
+            <h2 class="total-amount">Total Amount: ₹<span id="totalAmount"></span></h2>
+        </div>
+    </div>
+    <div class="interested-products">
+        <h3>You might be interested in</h3>
+        <div id="interestedProductList" class="product-list"></div>
+    </div>
+    <div class="similar-products">
+        <h3>Similar Products</h3>
+        <div id="similarProductList" class="product-list"></div>
+    </div>
+    <section class="main">
+        <div class="container">
+            <h2 class="head1">MOBILE BRANDS</h2>
+            <div id="productList"></div>
+        </div>
+    </section>
+    <script>
+        let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+        let totalAmount = parseInt(localStorage.getItem("totalAmount")) || 0;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            loadProductDetails();
+            loadOffers();
+            loadSpecifications();
+            loadInterestedProducts();
+            loadSimilarProducts();
+            displayTotalAmount();
+        });
+
+        function loadProductDetails() {
+            const product = {
+                id: 1,
+                name: "Sample Product",
+                description: "This is a sample product description.",
+                price: 2999,
+                image: "https://via.placeholder.com/300"
+            };
+
+            const productDetails = document.getElementById("productDetails");
+            productDetails.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h2>${product.name}</h2>
+                <p>${product.description}</p>
+                <p class="price">Price: ₹${product.price}</p>
+                <select id="productQuantity">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            `;
+        }
+
+        function loadOffers() {
+            const offers = [
+                "10% off on using XYZ bank credit card",
+                "Get free shipping on orders above ₹5000",
+                "Buy 1 Get 1 Free on selected items"
+            ];
+
+            const offersList = document.getElementById("offersList");
+            offers.forEach(offer => {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<i class="fa fa-tag"></i> ${offer}`;
+                offersList.appendChild(listItem);
+            });
+        }
+
+        function loadSpecifications() {
+            const specifications = {
+                "Processor": "2.0 GHz octa-core",
+                "RAM": "4GB",
+                "Storage": "64GB",
+                "Camera": "12MP",
+                "Battery": "4000mAh"
+            };
+
+            const specificationDiv = document.getElementById("Specification");
+            const specificationList = document.createElement("ul");
+            for (const [key, value] of Object.entries(specifications)) {
+                const listItem = document.createElement("li");
+                listItem.textContent = `${key}: ${value}`;
+                specificationList.appendChild(listItem);
+            }
+            specificationDiv.appendChild(specificationList);
+        }
+
+        function loadInterestedProducts() {
+            const interestedProducts = [
+            { name: "Wireless Charger", price: 3000, image: "image/charger.jpg", details: "Fast wireless charger for your mobile", category: "accessory" },
+                    { name: "Wireless Charger", price: 3000, image: "image/charger.jpg", details: "Fast wireless charger for your mobile", category: "accessory" },
+                    { name: "Portable Power Bank", price: 2000, image: "image/power.jpg", details: "Portable power bank for mobile charging on the go", category: "accessory" },
+                    { name: "Car Phone Mount", price: 1500, image: "image/ear.jpg", details: "Secure phone mount for your car", category: "accessory" },
+                    { name: "Wireless Charger", price: 3000, image: "image/charger.jpg", details: "Fast wireless charger for your mobile", category: "accessory" },
+                    { name: "Wireless Charger", price: 3000, image: "image/charger.jpg", details: "Fast wireless charger for your mobile", category: "accessory" }
+            ];
+
+            const interestedProductList = document.getElementById("interestedProductList");
+            interestedProducts.forEach(product => {
+                const productItem = document.createElement("div");
+                productItem.classList.add("product-item");
+                productItem.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                    <p class="price">Price: ₹${product.price}</p>
+                    <button onclick="addToCart(${product.id}, '${product.name}', ${product.price})">Add to Cart</button>
+                    <button onclick="buyNow()">Buy Now</button>
+                `;
+                interestedProductList.appendChild(productItem);
+            });
+        }
+
+        function loadSimilarProducts() {
+            const similarProducts = [
+                { id: 5, name: "Product X", price: 2999, image: "https://via.placeholder.com/150" },
+                { id: 6, name: "Product Y", price: 3499, image: "https://via.placeholder.com/150" },
+                { id: 7, name: "Product Z", price: 3199, image: "https://via.placeholder.com/150" }
+            ];
+
+            const similarProductList = document.getElementById("similarProductList");
+            similarProducts.forEach(product => {
+                const productItem = document.createElement("div");
+                productItem.classList.add("product-item");
+                productItem.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                    <p class="price">Price: ₹${product.price}</p>
+                    <button onclick="addToCart(${product.id}, '${product.name}', ${product.price})">Add to Cart</button>
+                    <button onclick="buyNow()">Buy Now</button>
+                `;
+                similarProductList.appendChild(productItem);
+            });
+        }
+
+        function addToCart(productId, productName, productPrice) {
+            const quantity = parseInt(document.getElementById("productQuantity").value);
+            const itemTotal = productPrice * quantity;
+            cartItems.push({ productId, productName, productPrice, quantity });
+            totalAmount += itemTotal;
+
+            localStorage.setItem("cartItems", JSON.stringify(cartItems));
+            localStorage.setItem("totalAmount", totalAmount);
+
+            displayTotalAmount();
+        }
+
+        function buyNow() {
+            window.location.href = "checkout.html";
+        }
+
+        function goToCart() {
+            window.location.href = "cart.html";
+        }
+
+        function displayTotalAmount() {
+            document.getElementById("totalAmount").textContent = totalAmount;
+        }
+
+        function searchProduct() {
+            const searchInput = document.getElementById("search-input").value.toLowerCase();
+            // Implement search functionality here
+        }
+    </script>
+</body>
+
+</html>

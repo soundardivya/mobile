@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel Example</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+
+        .car-container {
+            display: flex;
+            overflow: hidden;
+            padding: 0 10px;
+        }
+
+        .car-row {
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+
+        .car-col {
+            flex: 0 0 auto;
+            width: calc(100% / 4); /* Adjust width as per number of visible items */
+            max-width: 150px; /* Maximum width of each circular image */
+            text-align: center;
+            margin: 0 10px; /* Adjust spacing between images */
+        }
+
+        .car-col img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 50%; /* Makes the image circular */
+            max-height: 100px; /* Ensures all images have the same height */
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .arrow:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .arrow-left {
+            left: 10px;
+        }
+
+        .arrow-right {
+            right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="carousel">
+        <div class="car-container">
+            <div class="car-row">
+                <div class="car-col">
+                    <img src="image/1iph.jpg" alt="iPhone">
+                </div>
+                <div class="car-col">
+                    <img src="image/1sam.jpg" alt="Samsung">
+                </div>
+                <div class="car-col">
+                    <img src="image/1red.webp" alt="Redmi">
+                </div>
+                <div class="car-col">
+                    <img src="image/1one.webp" alt="OnePlus">
+                </div>
+                <div class="car-col">
+                    <img src="image/1oppo.jpg" alt="Oppo">
+                </div>
+                <div class="car-col">
+                    <img src="image/1vivo.jpg" alt="Vivo">
+                </div>
+                <div class="car-col">
+                    <img src="image/1infi.jpg" alt="Infinix">
+                </div>
+                <div class="car-col">
+                    <img src="image/1real.jpg" alt="Realme">
+                </div>
+            </div>
+        </div>
+        <div class="arrow arrow-left" onclick="scrollCarousel(-1)">
+            &lt;
+        </div>
+        <div class="arrow arrow-right" onclick="scrollCarousel(1)">
+            &gt;
+        </div>
+    </section>
+
+    <script>
+        let currentIndex = 0;
+        const items = document.querySelectorAll('.car-col');
+        const totalItems = items.length;
+        const visibleItems = 4; // Number of items visible at a time
+
+        function scrollCarousel(direction) {
+            const carRow = document.querySelector('.car-row');
+            currentIndex += direction;
+            if (currentIndex < 0) {
+                currentIndex = 0;
+            } else if (currentIndex > totalItems - visibleItems) {
+                currentIndex = totalItems - visibleItems;
+            }
+            const offset = currentIndex * (items[0].offsetWidth + 20); // Adjust for margin
+            carRow.style.transform = `translateX(-${offset}px)`;
+        }
+    </script>
+</body>
+
+</html>

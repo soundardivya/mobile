@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="cartcol">
+        <h2 class="head1">MY CART</h2>
+        <ul id="cartList"></ul> 
+        <div id="similarProducts">
+            <ul id="similarProductList"></ul>
+        </div>
+    </div>
+    <p class="amountpara">TOTAL AMOUNT: $<span id="cartTotal">0.00</span></p>
+    <button onclick="goToPayment()">Proceed to Payment</button>
+
+    <script>
+        function goToPayment() {
+            window.location.href = 'payment.html';
+        }
+
+        // Example code to display cart items and calculate total
+        const cartList = document.getElementById('cartList');
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let totalAmount = 0;
+
+        cart.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            cartList.appendChild(li);
+            totalAmount += 999; // assuming each iPhone costs $999
+        });
+
+        document.getElementById('cartTotal').textContent = totalAmount.toFixed(2);
+    </script>
+</body>
+</html>

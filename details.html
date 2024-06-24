@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.9/css/boxicons.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        a {
+            text-decoration: none;
+
+        }
+
+        .full {
+            width: 90%;
+            margin: auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .logo img {
+            width: 70px;
+            margin-right: 10px;
+            border-radius: 50px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        .logo span {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom right, #a4e5f7, #2b6088);
+            padding: 10px;
+            position: relative;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .search-bar input {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            width: 400px;
+            transition: border-color 0.3s ease;
+            flex: 1;
+            padding-left: 30px;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .search-bar .search-icon {
+            position: absolute;
+            left: 10px;
+            font-size: 18px;
+            color: #888;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            color: white;
+        }
+
+        .navbar-icons {
+            display: flex;
+            padding: 10px;
+            align-items: center;
+        }
+
+        .navbar-icons a {
+            margin-left: 30px;
+            color: white;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            gap: 5px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content .drop {
+            display: flex;
+            flex-wrap: nowrap;
+            padding: 10px;
+        }
+
+        .dropdown-content .drop-col {
+            flex: 1;
+
+            min-width: 300px;
+        }
+
+        .dropdown-content h4 {
+            margin: 0;
+            color: #3bac3f;
+            padding: 10px 0;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+
+        .dropdown-content h4::after {
+            content: '\25BC';
+            margin-left: 5px;
+            font-size: 10px;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            display: block;
+            padding: 8px 0;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+
+            color: #fff;
+        }
+
+
+        .drop {
+            display: flex;
+            flex-wrap: nowrap;
+            padding: 10px;
+            position: relative;
+        }
+
+
+        .image-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .dropdown-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-image:hover {
+            transform: scale(1.1);
+        }
+
+        @media screen and (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .navbar-icons {
+                display: none;
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            .navbar-icons.active {
+                display: flex;
+            }
+
+            .navbar-icons a {
+                margin: 10px 0;
+            }
+        }
+
+        .product-item img {
+            transition: transform 0.3s ease;
+        }
+
+        .product-item:hover img {
+            transform: scale(1.2);
+        }
+
+        .product-details img {
+            transition: transform 0.3s ease;
+        }
+
+        .product-details img:hover {
+            transform: scale(1.2);
+        }
+
+        .similar-products .product-item img,
+        .interested-products .product-item img {
+            transition: transform 0.3s ease;
+        }
+
+        .similar-products .product-item:hover img,
+        .interested-products .product-item:hover img {
+            transform: scale(1.2);
+        }
+
+        .product-details,
+        .button-container {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .product-details img {
+            width: 40%;
+            padding: 40px;
+            height: auto;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            border-radius: 0px;
+            justify-content: center;
+            box-shadow: 1px 0px 7px 0px gray;
+            /* border: 2px solid #211e1e; */
+            box-shadow: 0 px 1px 1px 0px #f0f0f0;
+
+        }
+
+        .product-details h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .product-details p {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .product-details .price {
+            font-size: 20px;
+            color: green;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 80px;
+            padding: 20px;
+        }
+
+        .btn1 {
+            color: #000;
+        }
+
+        .btn1 button {
+            width: 150%;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            font-size: 20px;
+            border-radius: 4px;
+            background-color: rgb(232, 163, 58);
+
+        }
+
+        .btn2 button {
+            width: 170%;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            background-color: rgb(213, 63, 8);
+            border-radius: 4px;
+        }
+
+        .button-container button:hover {
+            background-color: #45a049;
+        }
+
+        select {
+            font-size: 16px;
+            padding: 5px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .similar-products,
+        .interested-products {
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        .similar-products h3,
+        .interested-products h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .product-item {
+            flex: 1 1 calc(25% - 10px);
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 1px 0px 7px 0px gray;
+            box-sizing: border-box;
+        }
+
+        .product-item img {
+            max-width: 50%;
+            height: auto;
+            padding-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product-item h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .product-item p {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .product-item .price {
+            font-size: 18px;
+            color: green;
+
+        }
+
+        .total-amount {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .pro-row {
+            display: flex;
+        }
+
+        .pro-col1 {
+            width: 50%;
+        }
+
+        .pro-col2 {
+            width: 60%;
+            padding: 20px;
+        }
+
+        .pro-col2 h2 {
+            color: rgb(44, 41, 215);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .pro-col2 p {
+            color: rgb(101, 98, 98);
+            font-weight: 20px;
+        }
+
+        .pro-ram {
+            width: 20%;
+        }
+
+        .offer-row {
+            display: flex;
+        }
+
+        .offer-col1 {
+            width: 50%;
+        }
+
+        .offer-col2 {
+            width: 90%;
+        }
+
+        .offers {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 1px 1px 7px 1px gray;
+            /* background: linear-gradient(to bottom right, white, rgb(90, 181, 90), #a4e5f7, #2b6088, #e05cbd); */
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+
+        .offers h3 {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: rgb(44, 41, 215);
+        }
+
+        .offers ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 20px;
+            margin: 0;
+            color: black;
+
+        }
+
+        .offers li {
+            margin-bottom: 10px;
+        }
+
+        .offers li i {
+            margin-right: 10px;
+        }
+
+        .main {
+            background-color: rgb(248, 228, 252);
+        }
+
+        .head1 {
+            font-size: 40px;
+            color: #270132;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+
+        }
+
+        .productcol {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .product-item {
+            width: calc(25% - 20px);
+            margin: 10px;
+            padding: 10px;
+            border: 2px solid #9ef494;
+            cursor: pointer;
+            border: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .product-item img {
+            width: 100px;
+            height: auto;
+            display: block;
+            margin: 0 auto 10px;
+        }
+
+        .product-item p {
+            margin: 0;
+        }
+
+        .product-name {
+            font-size: 30px;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 20px;
+            /* Change font size */
+            color: #701919;
+            /* Change color */
+        }
+
+        #productList {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .pro-col {
+            width: 25%;
+
+        }
+
+        .pro-card {
+            margin: 30px;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .image img {
+            border-radius: 20px;
+            border: 2px solid black;
+        }
+
+        .display {
+            color: #3b4e7e;
+        }
+        .img-off{
+        display: flex;
+        }
+        .off{
+           width: 50%; 
+          
+        }
+        .off li{
+            list-style: none;
+        }
+        .off1{
+            width: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#" style="display: flex; align-items: center; justify-content: center;">
+                <img src="image/logom.png">
+                <span>Vetri Mobile</span>
+            </a>
+        </div>
+        <br>
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Mobiles</a>
+            <div class="dropdown-content">
+                <div class="drop">
+                    <div class="drop-col">
+                        <h4>Smartphones</h4>
+                        <a href="#">All Phones</a>
+                        <a href="#">Smartphones</a>
+                        <a href="#">iPhone</a>
+                    </div>
+                    <div class="drop-col">
+                        <h4>Mobile Brands</h4>
+                        <a href="#">iPhone</a>
+                        <a href="#">Samsung</a>
+                        <a href="#">Redmi</a>
+                        <a href="#">OnePlus</a>
+                        <a href="#">Oppo</a>
+                        <a href="#">Vivo</a>
+                        <a href="#">Infinix</a>
+                        <a href="#">Realme</a>
+
+                    </div>
+                    <div class="image-container">
+                        <img src="image/buy.jpg" alt="Buy Image" class="dropdown-image">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a href="#" class="dropbtn"> Accessories</a>
+            <div class="dropdown-content">
+                <div class="drop">
+                    <div class="drop-col">
+                        <h4>Mobile Accessories</h4>
+                        <a href="#">Chargers</a>
+                        <a href="#">Headphones</a>
+                        <a href="#">Bluetooth</a>
+                        <a href="#">Wireless Chargers</a>
+                    </div>
+                    <div class="image-container">
+                        <img src="image/buy.jpg" alt="Buy Image" class="dropdown-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <i class="fa fa-search search-icon" onclick="searchProduct()"></i>
+            <input id="search-input" type="text" placeholder="Search..."
+                onkeydown="if(event.key === 'Enter') searchProduct()">
+        </div>
+        <div class="menu-toggle">
+            <i class="fa fa-bars"></i>
+        </div>
+        <div class="navbar-icons">
+            <a href="home.html"><i class="fa fa-home"></i> Home</a>
+            <a href="#" class="login-btn"><i class="fa fa-user"></i> Sign In</a>
+            <a href="#" class="login-btn"><i class="fa fa-user"></i> Login</a>
+            <a href="cart.html" class="cart-icon"><i class="fa fa-shopping-cart"></i> Cart</a>
+        </div>
+    </nav>
+    <div class="full">
+        <div class="container">
+            <div class="left">
+                <div class="product-details" id="productDetails"></div>
+
+                <div class="Specifications" id="Specification"></div>
+
+            </div>
+            <!-- <div class="right"> -->
+            <div class="button-container">
+                <div class="btn1">
+                    <button onclick="addToCart()">Add to Cart</button>
+                </div>
+                <div class="btn2">
+                    <button onclick="buyNow()">Buy Now</button>
+                </div>
+                <!-- <button onclick="goToCart()">Go to Cart</button> -->
+            </div>
+            <h2 class="total-amount">Total Amount: ₹<span id="totalAmount"></span></h2>
+        </div>
+        <!--  <div class="offers" id="offersSection">
+         <h3>Available Offers</h3>
+            <ul id="offersList"></ul>
+        </div>-->
+        <!-- <div class="img-off">
+            <div class="off">
+                <h3>Available Offers</h3>
+                <ul id="offersList"></ul>
+            </div>
+            <div class="off1">
+                <img src="image/up.gif" width="100%" ; height="200px">
+            </div>
+        </div> -->
+
+
+        <!-- <div class="image">
+        <img src="image/2oppo.webp" width="100%" ; height="auto" ;>
+    </div> -->
+        <!-- <div class="interested-products">
+        <h3>You might be interested in</h3>
+        <div id="interestedProductList" class="product-list"></div>
+    </div> -->
+
+        <div class="similar-products">
+            <h3>Similar Products</h3>
+            <div id="similarProductList" class="product-list"></div>
+        </div>
+        <section class="main">
+            <div class="container">
+                <div id="productList"></div>
+            </div>
+        </section>
+    </div>
+    <script>
+        let totalAmount = 0;
+
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function displayProductDetails() {
+            const productName = getQueryParam('product');
+            const products = JSON.parse(localStorage.getItem('product'));
+            const product = products.find(p => p.name === productName);
+
+            if (product) {
+                const productDetailsDiv = document.getElementById('productDetails');
+                productDetailsDiv.innerHTML = `
+                <div class="pro-row">
+                    <div class="pro-col1">
+                    <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="pro-col2">
+                    <h2>${product.name}</h2>
+                    <p>${product.details}</p>
+                    <p class="price">Price: ₹${product.price}</p>
+                    <p class="price">Price: ₹${product.subprice}</p>
+                    <div class="pro-ram">
+                    <label for="ram">Select RAM:</label>
+                    <select id="ram" name="ram">
+                        ${product.ram.map(r => `<option value="${r}">${r} GB</option>`).join('')}
+                    </select>
+                    <label for="rom">Select ROM:</label>
+                    <select id="rom" name="rom">
+                        ${product.rom.map(r => `<option value="${r}">${r} GB</option>`).join('')}
+                    </select>
+                    <label for="color">Select Color:</label>
+                    <select id="color" name="color">
+                        ${product.color.map(c => `<option value="${c}">${c}</option>`).join('')}
+                    </select>
+                    </div>
+                    </div>
+                </div>
+                `;
+                totalAmount = product.price;
+                document.getElementById('totalAmount').innerText = totalAmount;
+                displaySimilarProducts(product);
+                displayInterestedProducts(product);
+            } else {
+                alert('Product not found');
+            }
+        }
+
+        function addToCart() {
+            const productName = getQueryParam('product');
+            const products = JSON.parse(localStorage.getItem('product'));
+            const product = products.find(p => p.name === productName);
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`${product.name} added to cart`);
+            updateTotal(product.price);
+        }
+
+        function buyNow() {
+            window.location.href = `payment.html?amount=${totalAmount}`;
+        }
+
+        function goToCart() {
+            window.location.href = 'cart.html';
+        }
+
+        function updateTotal(price) {
+            totalAmount += price;
+            document.getElementById('totalAmount').innerText = totalAmount;
+        }
+
+        function displaySimilarProduct(product) {
+            const similarProductItem = document.createElement("div");
+            similarProductItem.classList.add('product-item');
+            similarProductItem.innerHTML = `
+            <div class="display">
+                <img src="${product.image}" alt="${product.name}">
+                <h2>${product.name}</h2>
+                <p class="price">₹${product.price}</p>
+                <p class="price">Price: ₹${product.subpric4e}</p>
+                <p>${product.details}</p>
+                </div>`;
+            document.getElementById('similarProductList').appendChild(similarProductItem);
+            similarProductItem.addEventListener("click", function () {
+                window.location.href = `details.html?product=${product.name}`;
+            });
+        }
+
+        function displaySimilarProducts(product) {
+            const products = JSON.parse(localStorage.getItem('product'));
+            const similarProducts = products.filter(p => p.name.toLowerCase().includes(product.name.split(' ')[0].toLowerCase()) && p.name !== product.name);
+            similarProducts.forEach(displaySimilarProduct);
+        }
+
+        function displayInterestedProduct(product) {
+            const interestedProductItem = document.createElement("div");
+            interestedProductItem.classList.add('product-item');
+            interestedProductItem.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h2>${product.name}</h2>
+                <p class="price">₹${product.price}</p>
+                <p class="price">Price: ₹${product.subprice}</p>
+                <p>${product.details}</p>`;
+            document.getElementById('interestedProductList').appendChild(interestedProductItem);
+            interestedProductItem.addEventListener("click", function () {
+                window.location.href = `details.html?product=${product.name}`;
+            });
+        }
+
+        function displayInterestedProducts(product) {
+            if (product.category === "mobile") {
+                const interestedProducts = [
+                    { name: "Wireless Charger", price: 3000, image: "image/charger.jpg", details: "Fast wireless charger for your mobile", category: "accessory" },
+                    { name: "Wireless Charger", price: 3000, image: "image/charger.jpg", details: "Fast wireless charger for your mobile", category: "accessory" },
+                    { name: "Portable Power Bank", price: 2000, image: "image/power.jpg", details: "Portable power bank for mobile charging on the go", category: "accessory" },
+                    { name: "Car Phone Mount", price: 1500, image: "image/ear.jpg", details: "Secure phone mount for your car", category: "accessory" },
+                    { name: "Wireless Charger", price: 3000, image: "image/charger.jpg", details: "Fast wireless charger for your mobile", category: "accessory" },
+                    { name: "Wireless Charger", price: 3000, image: "image/charger.jpg", details: "Fast wireless charger for your mobile", category: "accessory" }
+                ];
+                interestedProducts.forEach(displayInterestedProduct);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            displayProductDetails();
+        });
+
+        function displayBrands(filteredBrands = brands) {
+            const productListElement = document.getElementById("productList");
+            productListElement.innerHTML = "";
+            filteredBrands.forEach(brand => {
+                const brandDiv = document.createElement("div");
+                brandDiv.className = "pro-col";
+                brandDiv.innerHTML = `
+                    <div class="pro-card" onclick="navigateToPage('${brand.page}', '${brand.name}')">
+                        <img src="${brand.image}" alt="${brand.name}">
+                        <p>${brand.name}</p>
+                    </div>
+                `;
+                productListElement.appendChild(brandDiv);
+            });
+        }
+
+        function navigateToPage(page, brandName) {
+            window.location.href = `${page}?brand=${encodeURIComponent(brandName)}`;
+        }
+        const offers = [
+            { icon: 'bx bxs-gift', text: 'Bank Offer: Get 10% off upto ₹50 on first Flipkart UPI Transactions on order of ₹200 and above.' },
+            { icon: 'bx bxs-gift', text: 'Bank Offer: 5% Cashback on Flipkart Axis Bank Card.' },
+            { icon: 'bx bxs-gift', text: 'Freebie: Flat ₹1000 off on Cleartrip hotels booking along with 300 supercoins on booking.' },
+            { icon: 'bx bxs-gift', text: 'Freebie: Flat ₹650 off on Cleartrip flights booking along with 300 supercoins on booking. ' }
+        ];
+
+        // Function to display offers
+        function displayOffers() {
+            const offersList = document.getElementById('offersList');
+            offers.forEach(offer => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                <div class="offer-row">
+
+                    <div class="offer-col2">
+                    <i class='${offer.icon}'></i>${offer.text}
+                    </div>
+                    </div>`;
+                offersList.appendChild(listItem);
+            });
+        }
+
+        // Call the function to display offers when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            displayOffers();
+        });
+
+        const brands = [
+            { name: "iPhone", image: "image/iph1.png", page: "iphone1.html" },
+            { name: "Samsung", image: "image/sum1.png", page: "sumsung.html" },
+            { name: "redmi", image: "image/xiaomi.png", page: "redmi.html" },
+            { name: "OnePlus", image: "image/oneplus.png", page: "oneplus.html" },
+            { name: "Oppo", image: "image/opp1.png", page: "oppo.html" },
+            { name: "Vivo", image: "image/vivo.png", page: "vivo.html" },
+            { name: "Infinix", image: "image/infin1.png", page: "infinix.html" },
+            { name: "Realme", image: "image/real1.png", page: "realme.html" }
+        ];
+
+        function displayBrands(filteredBrands = brands) {
+            const productListElement = document.getElementById("productList");
+            productListElement.innerHTML = "";
+            filteredBrands.forEach(brand => {
+                const brandDiv = document.createElement("div");
+                brandDiv.className = "pro-col";
+                brandDiv.innerHTML = `
+                    <div class="pro-card" onclick="navigateToPage('${brand.page}', '${brand.name}')">
+                        <img src="${brand.image}">
+                    </div>
+                `;
+                productListElement.appendChild(brandDiv);
+            });
+        }
+
+        function navigateToPage(page, brandName) {
+            window.location.href = `${page}?brand=${encodeURIComponent(brandName)}`;
+        }
+
+        function searchProduct() {
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
+            if (searchInput === '') {
+                displayBrands();
+                return;
+            }
+
+            const matchedBrand = brands.find(brand => brand.name.toLowerCase() === searchInput);
+
+            if (matchedBrand) {
+                navigateToPage(matchedBrand.page, matchedBrand.name);
+            } else {
+                const filteredBrands = brands.filter(brand => brand.name.toLowerCase().includes(searchInput));
+                displayBrands(filteredBrands);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navbarIcons = document.querySelector('.navbar-icons');
+            const searchBar = document.querySelector('.search-bar');
+
+            menuToggle.addEventListener('click', function () {
+                navbarIcons.classList.toggle('active');
+                searchBar.classList.toggle('active');
+            });
+
+            displayBrands();
+
+            document.getElementById('search-input').addEventListener('input', searchProduct);
+            document.querySelectorAll('.mobile-col').forEach(col => {
+                col.addEventListener('click', function () {
+                    const page = this.getAttribute('data-page');
+                    window.location.href = page;
+                });
+            });
+
+        });
+        function displayProducts(products) {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <img src="${product.image}" alt="${product.brand}">
+                    <p>${product.brand}</p>
+                `;
+                productList.appendChild(productItem);
+            });
+        }
+
+        function filterProducts(brand) {
+            const filteredProducts = mobileData.filter(product => product.brand === brand);
+            displayProducts(filteredProducts);
+        }
+
+        // Display all products initially
+        displayProducts(mobileData);
+    </script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+</body>
+
+</html>

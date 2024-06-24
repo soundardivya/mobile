@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.9/css/boxicons.min.css">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#" style="display: flex; align-items: center; justify-content: center;">
+                <img src="image/logom.png">
+                <span>Vetri Mobile</span>
+            </a>
+        </div>
+        <br>
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Mobiles</a>
+            <div class="dropdown-content">
+                <div class="drop">
+                    <div class="drop-col">
+                        <h4>Smartphones</h4>
+                        <a href="#">All Phones</a>
+                        <a href="#">Smartphones</a>
+                        <a href="#">iPhone</a>
+                    </div>
+                    <div class="drop-col">
+                        <h4>Mobile Brands</h4>
+                        <a href="#">iPhone</a>
+                        <a href="#">Samsung</a>
+                        <a href="#">Redmi</a>
+                        <a href="#">OnePlus</a>
+                        <a href="#">Oppo</a>
+                        <a href="#">Vivo</a>
+                        <a href="#">Infinix</a>
+                        <a href="#">Realme</a>
+
+                    </div>
+                    <div class="image-container">
+                        <img src="image/buy.jpg" alt="Buy Image" class="dropdown-image">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a href="#" class="dropbtn"> Accessories</a>
+            <div class="dropdown-content">
+                <div class="drop">
+                    <div class="drop-col">
+                        <h4>Mobile Accessories</h4>
+                        <a href="#">Chargers</a>
+                        <a href="#">Headphones</a>
+                        <a href="#">Bluetooth</a>
+                        <a href="#">Wireless Chargers</a>
+                    </div>
+                    <div class="image-container">
+                        <img src="image/buy.jpg" alt="Buy Image" class="dropdown-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <i class="fa fa-search search-icon" onclick="searchProduct()"></i>
+            <input id="search-input" type="text" placeholder="Search..."
+                onkeydown="if(event.key === 'Enter') searchProduct()">
+        </div>
+        <div class="menu-toggle">
+            <i class="fa fa-bars"></i>
+        </div>
+        <div class="navbar-icons">
+            <a href="home.html"><i class="fa fa-home"></i> Home</a>
+            <a href="#" class="login-btn"><i class="fa fa-user"></i> Sign In</a>
+            <a href="#" class="login-btn"><i class="fa fa-user"></i> Login</a>
+            <a href="cart.html" class="cart-icon"><i class="fa fa-shopping-cart"></i> Cart</a>
+        </div>
+    </nav>
+    <div class="banner-img">
+        <img src="image/Infinix2.jpg">
+    </div>
+    <div class="full">
+        <div class="productcol"></div>
+        <section class="main">
+            <div class="container">
+                <div id="productList"></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function goToCart() {
+            window.location.href = 'cart.html';
+        }
+
+        const productCol = document.querySelector('.productcol');
+        document.addEventListener("DOMContentLoaded", function () {
+            const products = [
+                { id: 77, name: "Infinix Note 11", price: 12000, image: "image/i11.jpg", brand: "Infinix", details: "Infinix with good performance", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.1, color: ["Black", "White"] },
+                { id: 78, name: "Infinix Note 10", price: 11000, image: "image/i10.jpg", brand: "Infinix", details: "Affordable Infinix with decent specs", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.0, color: ["Black", "White"] },
+                { id: 79, name: "Infinix Hot 10", price: 10000, image: "image/hot.jpg", brand: "Infinix", details: "Budget Infinix with solid features", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.0, color: ["Black", "White"] },
+                { id: 80, name: "Infinix Hot 9", price: 9000, image: "image/h9.jpg", brand: "Infinix", details: "Value Infinix with good performance", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.0, color: ["Black", "White"] },
+                { id: 81, name: "Infinix Smart 5", price: 8000, image: "image/ism5.jpg", brand: "Infinix", details: "Affordable Infinix with basic features", category: "mobile", ram: ["3GB"], rom: ["32GB"], review: 3.9, color: ["Black", "White"] },
+                { id: 82, name: "Infinix Zero 8", price: 15000, image: "image/in8.jpg", brand: "Infinix", details: "Infinix with great camera", category: "mobile", ram: ["8GB"], rom: ["128GB"], review: 4.3, color: ["Black", "White"] },
+                { id: 83, name: "Infinix Zero 6", price: 14000, image: "image/in6.jpeg", brand: "Infinix", details: "Infinix with excellent features", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.2, color: ["Black", "White"] },
+                { id: 84, name: "Infinix S5", price: 13000, image: "image/5s.jpg", brand: "Infinix", details: "Mid-range Infinix with good value", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.1, color: ["Black", "White"] },
+                { id: 85, name: "Infinix S4", price: 12000, image: "image/s4.jpg", brand: "Infinix", details: "Affordable Infinix with decent specs", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.0, color: ["Black", "White"] },
+                { id: 86, name: "Infinix Hot 7", price: 10000, image: "image/h7.jpeg", brand: "Infinix", details: "Budget Infinix with solid performance", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 3.9, color: ["Black", "White"] },
+                { id: 87, name: "Infinix Note 12 Pro", price: 18000, image: "image/n12.jpg", brand: "Infinix", details: "Pro version of Note series with enhanced features", category: "mobile", ram: ["6GB"], rom: ["128GB"], review: 4.5, color: ["Black", "White"] },
+                { id: 88, name: "Infinix Hot 11", price: 11000, image: "image/in11.jpg", brand: "Infinix", details: "Updated version of Hot series with improved performance", category: "mobile", ram: ["4GB"], rom: ["64GB"], review: 4.1, color: ["Black", "White"] },
+                { id: 89, name: "Infinix Zero 9", price: 20000, image: "image/z9.jpg", brand: "Infinix", details: "Flagship Infinix model with cutting-edge features", category: "mobile", ram: ["8GB"], rom: ["256GB"], review: 4.7, color: ["Black", "White"] }
+            ];
+
+            localStorage.setItem("products", JSON.stringify(products));
+
+            products.forEach(product => {
+                const div = document.createElement('div');
+                div.className = 'product-item';
+                div.innerHTML = `
+                    <div class="prod-img">
+                    <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="pro-n">
+                    <p class="product-name">${product.name}</p>
+                    <p class="product-price">₹${product.price}</p>
+                    </div>
+                `;
+                div.onclick = () => viewProductDetails(product);
+                productCol.appendChild(div);
+            });
+
+            function viewProductDetails(product) {
+                window.location.href = `details.html?product=${product.name}`;
+            }
+
+            function addToCart(product) {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert(`${product.name} added to cart`);
+            }
+        });
+        const brands = [
+            { name: "iPhone", image: "image/iph1.png", page: "iphone1.html" },
+            { name: "Samsung", image: "image/sum1.png", page: "sumsung.html" },
+            { name: "redmi", image: "image/xiaomi.png", page: "redmi.html" },
+            { name: "OnePlus", image: "image/oneplus.png", page: "oneplus.html" },
+            { name: "Oppo", image: "image/opp1.png", page: "oppo.html" },
+            { name: "Vivo", image: "image/vivo.png", page: "vivo.html" },
+            { name: "Infinix", image: "image/infin1.png", page: "infinix.html" },
+            { name: "Realme", image: "image/real1.png", page: "realme.html" }
+        ];
+
+        function displayBrands(filteredBrands = brands) {
+            const productListElement = document.getElementById("productList");
+            productListElement.innerHTML = "";
+            filteredBrands.forEach(brand => {
+                const brandDiv = document.createElement("div");
+                brandDiv.className = "pro-col";
+                brandDiv.innerHTML = `
+                    <div class="pro-card" onclick="navigateToPage('${brand.page}', '${brand.name}')">
+                        <img src="${brand.image}" alt="${brand.name}">
+                    </div>
+                `;
+                productListElement.appendChild(brandDiv);
+            });
+        }
+
+        function navigateToPage(page, brandName) {
+            window.location.href = `${page}?brand=${encodeURIComponent(brandName)}`;
+        }
+
+        function searchProduct() {
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
+            if (searchInput === '') {
+                displayBrands();
+                return;
+            }
+
+            const matchedBrand = brands.find(brand => brand.name.toLowerCase() === searchInput);
+
+            if (matchedBrand) {
+                navigateToPage(matchedBrand.page, matchedBrand.name);
+            } else {
+                const filteredBrands = brands.filter(brand => brand.name.toLowerCase().includes(searchInput));
+                displayBrands(filteredBrands);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            displayBrands();
+
+            document.getElementById('search-input').addEventListener('input', searchProduct);
+        });
+    </script>
+</body>
+
+</html>
